@@ -1,0 +1,45 @@
+@model FilmIncelemeApp.Models.Yorumlar
+
+@{
+    ViewData["Title"] = "Yorum Sil";
+}
+
+<h1>Yorum Sil</h1>
+
+<div class="alert alert-danger">
+    <h3>Bu yorumu silmek istediğinizden emin misiniz?</h3>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Film:</dt>
+            <dd class="col-sm-9">@Model.Film?.Baslik</dd>
+            
+            <dt class="col-sm-3">Kategori:</dt>
+            <dd class="col-sm-9">@Model.Film?.Kategori?.Ad</dd>
+            
+            <dt class="col-sm-3">Yorum Yapan:</dt>
+            <dd class="col-sm-9">@Model.YorumYapan</dd>
+            
+            <dt class="col-sm-3">Puan:</dt>
+            <dd class="col-sm-9">
+                <span class="badge bg-@(Model.Puan >= 4 ? "success" : Model.Puan >= 3 ? "warning" : "danger")">
+                    @Model.Puan
+                </span>
+            </dd>
+            
+            <dt class="col-sm-3">Yorum:</dt>
+            <dd class="col-sm-9">@Model.YorumMetni</dd>
+            
+            <dt class="col-sm-3">Tarih:</dt>
+            <dd class="col-sm-9">@Model.Tarih?.ToString("dd.MM.yyyy HH:mm")</dd>
+        </dl>
+    </div>
+</div>
+
+<form asp-action="Delete" class="mt-3">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Sil" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+</form> 

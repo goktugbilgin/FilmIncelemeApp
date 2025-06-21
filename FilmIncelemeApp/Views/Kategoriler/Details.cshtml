@@ -1,0 +1,53 @@
+@model FilmIncelemeApp.Models.Kategoriler
+
+@{
+    ViewData["Title"] = "Kategori Detayları";
+}
+
+<h1>Kategori Detayları</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Kategori Adı:</dt>
+            <dd class="col-sm-9">@Model.Ad</dd>
+        </dl>
+        
+        @if (Model.Filmlers.Any())
+        {
+            <h3>Bu Kategorideki Filmler</h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Film Adı</th>
+                            <th>Yayın Yılı</th>
+                            <th>Açıklama</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var film in Model.Filmlers)
+                        {
+                            <tr>
+                                <td>@film.Baslik</td>
+                                <td>@film.Yayinyili</td>
+                                <td>@(film.Aciklama?.Length > 50 ? film.Aciklama.Substring(0, 50) + "..." : film.Aciklama)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                Bu kategoride henüz film bulunmamaktadır.
+            </div>
+        }
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+    <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+</div> 

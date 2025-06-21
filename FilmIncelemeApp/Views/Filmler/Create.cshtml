@@ -1,0 +1,58 @@
+@model FilmIncelemeApp.Models.Filmler
+
+@{
+    ViewData["Title"] = "Yeni Film Ekle";
+}
+
+<h1><i class="fas fa-plus-circle text-primary me-2"></i>Yeni Film Ekle</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    
+                    <div class="form-group mb-3">
+                        <label asp-for="Baslik" class="control-label fw-bold">Başlık</label>
+                        <input asp-for="Baslik" class="form-control" placeholder="Film başlığını girin" />
+                        <span asp-validation-for="Baslik" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label asp-for="Aciklama" class="control-label fw-bold">Açıklama</label>
+                        <textarea asp-for="Aciklama" class="form-control" rows="4" placeholder="Film açıklamasını girin"></textarea>
+                        <span asp-validation-for="Aciklama" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label asp-for="Yayinyili" class="control-label fw-bold">Yayın Yılı</label>
+                        <input asp-for="Yayinyili" class="form-control" type="number" min="1900" max="@DateTime.Now.Year" placeholder="Yayın yılını girin" />
+                        <span asp-validation-for="Yayinyili" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group mb-3">
+                        <label asp-for="KategoriId" class="control-label fw-bold">Kategori</label>
+                        <select asp-for="KategoriId" class="form-control" asp-items="ViewBag.KategoriId">
+                            <option value="">Kategori Seçin</option>
+                        </select>
+                        <span asp-validation-for="KategoriId" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Kaydet
+                        </button>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>Ana Sayfaya Dön
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

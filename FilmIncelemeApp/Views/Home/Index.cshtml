@@ -1,0 +1,141 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fas fa-check-circle me-2"></i>@TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fas fa-exclamation-triangle me-2"></i>@TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="text-center mb-5">
+    <h1 class="display-4 fw-bold text-primary">
+        <i class="fas fa-film me-3"></i>Film Evreni
+    </h1>
+    <p class="lead text-muted">Filmlerinizi keşfedin, puanlayın ve yorumlarınızı paylaşın!</p>
+    <hr class="my-4">
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="card text-center border-0 shadow-lg h-100" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <div class="card-body text-white">
+                <i class="fas fa-video fa-3x mb-3"></i>
+                <h5 class="card-title fw-bold">Toplam Film</h5>
+                <h2 class="card-text display-6 fw-bold">@ViewBag.FilmSayisi</h2>
+                <a asp-controller="Filmler" asp-action="Index" class="btn btn-light btn-sm mt-2">
+                    <i class="fas fa-eye me-1"></i>Filmleri Görüntüle
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-0 shadow-lg h-100" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+            <div class="card-body text-white">
+                <i class="fas fa-tags fa-3x mb-3"></i>
+                <h5 class="card-title fw-bold">Toplam Kategori</h5>
+                <h2 class="card-text display-6 fw-bold">@ViewBag.KategoriSayisi</h2>
+                <a asp-controller="Kategoriler" asp-action="Index" class="btn btn-light btn-sm mt-2">
+                    <i class="fas fa-eye me-1"></i>Kategorileri Görüntüle
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-0 shadow-lg h-100" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <div class="card-body text-white">
+                <i class="fas fa-comments fa-3x mb-3"></i>
+                <h5 class="card-title fw-bold">Toplam Yorum</h5>
+                <h2 class="card-text display-6 fw-bold">@ViewBag.YorumSayisi</h2>
+                <a asp-controller="Yorumlar" asp-action="Index" class="btn btn-light btn-sm mt-2">
+                    <i class="fas fa-eye me-1"></i>Yorumları Görüntüle
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center border-0 shadow-lg h-100" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+            <div class="card-body text-white">
+                <i class="fas fa-star fa-3x mb-3"></i>
+                <h5 class="card-title fw-bold">Ortalama Puan</h5>
+                <h2 class="card-text display-6 fw-bold">@ViewBag.OrtalamaPuan.ToString("F1")</h2>
+                <a asp-controller="Yorumlar" asp-action="YuksekPuanliYorumlar" class="btn btn-light btn-sm mt-2">
+                    <i class="fas fa-star me-1"></i>Yüksek Puanlılar
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-trophy me-2"></i>En Yüksek Puanlı Filmler
+                </h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.EnYuksekPuanliFilmler != null && ViewBag.EnYuksekPuanliFilmler.Count > 0)
+                {
+                    <div class="list-group list-group-flush">
+                        @foreach (var item in ViewBag.EnYuksekPuanliFilmler)
+                        {
+                            <div class="list-group-item d-flex justify-content-between align-items-center border-0 py-3">
+                                <div>
+                                    <h6 class="mb-1 fw-bold text-primary">@item.Film.Baslik</h6>
+                                    <small class="text-muted">
+                                        <i class="fas fa-tag me-1"></i>@item.Film.Kategori?.Ad 
+                                        <i class="fas fa-calendar ms-2 me-1"></i>@item.Film.Yayinyili
+                                    </small>
+                                </div>
+                                <span class="badge bg-success rounded-pill fs-6 px-3 py-2">
+                                    <i class="fas fa-star me-1"></i>@item.OrtalamaPuan.ToString("F1")
+                                </span>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-4">
+                        <i class="fas fa-film fa-3x text-muted mb-3"></i>
+                        <p class="text-muted">Henüz yorum yapılmamış.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-bolt me-2"></i>Hızlı İşlemler
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-3">
+                    <a asp-controller="Filmler" asp-action="Create" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus-circle me-2"></i>Yeni Film Ekle
+                    </a>
+                    <a asp-controller="Kategoriler" asp-action="Create" class="btn btn-success btn-lg">
+                        <i class="fas fa-tag me-2"></i>Yeni Kategori Ekle
+                    </a>
+                    <a asp-controller="Yorumlar" asp-action="Create" class="btn btn-info btn-lg">
+                        <i class="fas fa-comment me-2"></i>Yeni Yorum Ekle
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

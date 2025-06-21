@@ -1,0 +1,40 @@
+@model FilmIncelemeApp.Models.Yorumlar
+
+@{
+    ViewData["Title"] = "Yorum Detayları";
+}
+
+<h1>Yorum Detayları</h1>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Film:</dt>
+            <dd class="col-sm-9">@Model.Film?.Baslik</dd>
+            
+            <dt class="col-sm-3">Kategori:</dt>
+            <dd class="col-sm-9">@Model.Film?.Kategori?.Ad</dd>
+            
+            <dt class="col-sm-3">Yorum Yapan:</dt>
+            <dd class="col-sm-9">@Model.YorumYapan</dd>
+            
+            <dt class="col-sm-3">Puan:</dt>
+            <dd class="col-sm-9">
+                <span class="badge bg-@(Model.Puan >= 4 ? "success" : Model.Puan >= 3 ? "warning" : "danger")">
+                    @Model.Puan
+                </span>
+            </dd>
+            
+            <dt class="col-sm-3">Yorum:</dt>
+            <dd class="col-sm-9">@Model.YorumMetni</dd>
+            
+            <dt class="col-sm-3">Tarih:</dt>
+            <dd class="col-sm-9">@Model.Tarih?.ToString("dd.MM.yyyy HH:mm")</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+    <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+</div> 
